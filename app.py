@@ -1,3 +1,4 @@
+import definitely_missing_module  # deliberate startup failure for the Lab Deploy failure exercise
 from fastapi import FastAPI
 
 app = FastAPI()
