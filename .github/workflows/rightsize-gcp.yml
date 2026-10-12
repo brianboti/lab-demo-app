@@ -44,7 +44,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: brianboti/lab-deploy
-          ref: 08d8829ce035c133d288dd69e0522ad4eb66bc33
+          ref: d77e2cea2072ef44d8bbfee9995d363e29b6d70f
           persist-credentials: false
           path: platform
           token: ${{ secrets.PLATFORM_READ_TOKEN || github.token }}
@@ -89,13 +89,13 @@ jobs:
           from labdeploy.cost import issue_body
           print(issue_body(json.load(open("cost-report.json")), os.environ["RUN_URL"]))
           PY
+          # The job never checks out this repository, so every gh call names it explicitly.
           TITLE="Lab Deploy cost report: $SERVICE"
-          NUMBER=$(gh issue list --state open --search "\"$TITLE\" in:title" --json number,title --jq ".[] | select(.title == \"$TITLE\") | .number" | head -1)
+          NUMBER=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "\"$TITLE\" in:title" --json number,title --jq ".[] | select(.title == \"$TITLE\") | .number" | head -1)
           if [ -n "$NUMBER" ]; then
-            gh issue edit "$NUMBER" --body-file issue-body.md > /dev/null && echo "updated issue #$NUMBER"
+            gh issue edit "$NUMBER" --repo "$GITHUB_REPOSITORY" --body-file issue-body.md > /dev/null && echo "updated issue #$NUMBER"
           else
-            gh issue create --title "$TITLE" --body-file issue-body.md --label "" 2>/dev/null || gh issue create --title "$TITLE" --body-file issue-body.md > /dev/null
-            echo "created the cost report issue"
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITLE" --body-file issue-body.md > /dev/null && echo "created the cost report issue"
           fi
   notify:
     needs: [rightsize]
