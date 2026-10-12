@@ -15,6 +15,12 @@ concurrency: 80
 env:
   GREETING: hello from Lab Deploy 0.8.0
 timeout_seconds: 120
+# What the app needs besides its container; the platform provisions them and sets BUCKET_UPLOADS, TOPIC_EVENTS,
+# SUBSCRIPTION_EVENTS and FIRESTORE_DATABASE on every revision (docs/SETUP.md 6b in the platform repository).
+needs:
+  buckets: [uploads]
+  topics: [events]
+  database: firestore
 exposure: authenticated
 state: stateless
 dependencies: []
