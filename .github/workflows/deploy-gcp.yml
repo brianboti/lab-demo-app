@@ -62,7 +62,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: brianboti/lab-deploy
-          ref: d77e2cea2072ef44d8bbfee9995d363e29b6d70f
+          ref: 09c08a4cb114194771115b1a17456bb0adedb416
           persist-credentials: false
           path: platform
           # For a private platform repo: read-only fine-grained token or App token.
@@ -84,12 +84,29 @@ jobs:
           enforce(spec)
           assert spec_hash(spec) == os.environ['SPEC_HASH'], 'Spec hash mismatch'
           PY
+      - name: Read the application's test policy
+        id: policy
+        env:
+          PYTHONPATH: ${{ github.workspace }}/platform
+        shell: bash
+        run: |
+          set -euo pipefail
+          TESTS=$(python -c 'from pathlib import Path; from labdeploy.models import parse_spec; print(parse_spec(Path("app/platform.yaml").read_text()).tests)')
+          [[ "$TESTS" =~ ^(required|none)$ ]]
+          echo "tests=$TESTS" >> "$GITHUB_OUTPUT"
+          [ "$TESTS" = "required" ] || echo "::warning::platform.yaml declares tests: none; no automated tests guard this release"
       - name: Run unit tests
+        if: steps.policy.outputs.tests == 'required'
         working-directory: app
         run: |
           set -euo pipefail
           python -m venv .test-venv
-          .test-venv/bin/pip install -r requirements.txt -r requirements-dev.txt
+          if [ -f requirements.lock ]; then
+            .test-venv/bin/pip install --require-hashes -r requirements.lock
+          else
+            .test-venv/bin/pip install -r requirements.txt
+          fi
+          .test-venv/bin/pip install -r requirements-dev.txt
           .test-venv/bin/python -m pytest
       - name: Audit Python dependencies
         working-directory: app
@@ -137,7 +154,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: brianboti/lab-deploy
-          ref: d77e2cea2072ef44d8bbfee9995d363e29b6d70f
+          ref: 09c08a4cb114194771115b1a17456bb0adedb416
           persist-credentials: false
           path: platform
           token: ${{ secrets.PLATFORM_READ_TOKEN || github.token }}
