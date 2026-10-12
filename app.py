@@ -5,7 +5,8 @@ app = FastAPI()
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    # Trial scenario: a release whose candidate never becomes healthy must be rolled back automatically.
+    raise RuntimeError("simulated unhealthy release")
 
 
 @app.get("/")
