@@ -43,7 +43,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: brianboti/lab-deploy
-          ref: 0be1c96e3c604f6a431389dded2a9abb3aedfc2f
+          ref: 5d0601eb12efe40fd42220b8a864658a94ab8f6a
           persist-credentials: false
           path: platform
           token: ${{ secrets.PLATFORM_READ_TOKEN || github.token }}
