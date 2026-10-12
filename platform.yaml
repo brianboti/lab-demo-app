@@ -11,6 +11,10 @@ scaling:
   maximum: 2
 # Requests served in parallel by one instance; higher values need fewer instances and cost less when the app can handle it.
 concurrency: 80
+# Plain configuration set on every revision; secrets would be listed under `secrets` as Secret Manager names.
+env:
+  GREETING: hello from Lab Deploy 0.8.0
+timeout_seconds: 120
 exposure: authenticated
 state: stateless
 dependencies: []
