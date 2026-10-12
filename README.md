@@ -7,3 +7,5 @@ platform repository `brianboti/lab-deploy` at commit `f16ddc1674f46608530d006380
 - `platform.yaml` is the reviewed deployment specification.
 - `/health` is the readiness endpoint probed by Cloud Run and by the release.
 
+
+Last platform readiness check: 2026-10-12 (Lab Deploy 1.5.0, released from Claude chat).
