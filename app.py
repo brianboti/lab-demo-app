@@ -1,8 +1,3 @@
-import os
-
-if os.environ.get("K_SERVICE"):  # only inside Cloud Run, so unit tests pass and the candidate dies at startup
-    raise RuntimeError("deliberate startup crash for the Lab Deploy failure exercise")
-
 from fastapi import FastAPI
 
 app = FastAPI()
