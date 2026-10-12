@@ -62,7 +62,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: brianboti/lab-deploy
-          ref: 5d0601eb12efe40fd42220b8a864658a94ab8f6a
+          ref: afb417c36072cd72ed341b89022315def00932f7
           persist-credentials: false
           path: platform
           # For a private platform repo: read-only fine-grained token or App token.
@@ -137,7 +137,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: brianboti/lab-deploy
-          ref: 5d0601eb12efe40fd42220b8a864658a94ab8f6a
+          ref: afb417c36072cd72ed341b89022315def00932f7
           persist-credentials: false
           path: platform
           token: ${{ secrets.PLATFORM_READ_TOKEN || github.token }}
@@ -205,6 +205,9 @@ jobs:
           workload_identity_provider: ${{ vars.WIF_PROVIDER }}
           service_account: ${{ vars.DEPLOY_SERVICE_ACCOUNT }}
       - uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db # v3
+      - name: Configure registry access
+        shell: bash
+        run: gcloud auth configure-docker "$GCP_REGION-docker.pkg.dev" --quiet
       - name: Recover any interrupted previous release
         env:
           PYTHONPATH: ${{ github.workspace }}/platform
@@ -215,7 +218,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          gcloud auth configure-docker "$GCP_REGION-docker.pkg.dev" --quiet
           docker load -i bundle/image.tar
           IMAGE="$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/$REGISTRY_NAME/$SERVICE"
           docker tag "lab-app:$COMMIT_SHA" "$IMAGE:$COMMIT_SHA"
