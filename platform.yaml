@@ -20,8 +20,7 @@ timeout_seconds: 120
 needs:
   buckets: [uploads]
   topics: [events]
-  database: postgres          # trial of Lab Deploy 1.4.0: the smallest Cloud SQL instance, private address, IAM sign-in
-  migrate: [python, -c, "print('no migrations yet')"]   # runs as the lab-demo-migrate job before the candidate exists
+  database: none              # the demo stores nothing; firestore and postgres were exercised on 2026-10-12
 exposure: authenticated
 state: stateless
 dependencies: []
