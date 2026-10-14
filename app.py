@@ -1,3 +1,5 @@
+import platform
+
 from fastapi import FastAPI
 
 app = FastAPI()
@@ -10,5 +12,4 @@ def health():
 
 @app.get("/")
 def index():
-    return {"message": "Lab deployment is running", "version": "0.1.0"}
-
+    return {"message": "Lab deployment is running", "version": "0.2.0", "python": platform.python_version()}
