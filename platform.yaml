@@ -25,6 +25,8 @@ exposure: authenticated
 state: stateless
 dependencies: []
 gpu: false
+# The Python the release tests and audits on; the Dockerfile builds on the same one.
+python: "3.15"
 # This example app has been inspected; generated configs default to false.
 reviewed: true
 
