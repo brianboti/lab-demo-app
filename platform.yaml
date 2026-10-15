@@ -14,7 +14,6 @@ concurrency: 80
 # Plain configuration set on every revision; secrets would be listed under `secrets` as Secret Manager names.
 env:
   GREETING: hello from Lab Deploy 0.8.0
-  FAULT_EVERY: "4"           # bake trial (platform 1.9.0): every 4th page request answers 500; removed right after
 timeout_seconds: 120
 # What the app needs besides its container; the platform provisions them and sets BUCKET_UPLOADS, TOPIC_EVENTS,
 # SUBSCRIPTION_EVENTS and FIRESTORE_DATABASE on every revision (docs/SETUP.md 6b in the platform repository).
