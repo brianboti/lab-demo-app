@@ -14,9 +14,6 @@ concurrency: 80
 # Plain configuration set on every revision; secrets would be listed under `secrets` as Secret Manager names.
 env:
   GREETING: hello from Lab Deploy 0.8.0
-  # The rollback drill (platform docs/RUNBOOK.md, Production): every second request to / answers 500 while /health stays
-  # fine, so the probes pass and only real traffic shows it. Removed again by the drill's second pull request.
-  FAULT_EVERY: "2"
 timeout_seconds: 120
 # What the app needs besides its container; the platform provisions them and sets BUCKET_UPLOADS, TOPIC_EVENTS,
 # SUBSCRIPTION_EVENTS and FIRESTORE_DATABASE on every revision (docs/SETUP.md 6b in the platform repository).
