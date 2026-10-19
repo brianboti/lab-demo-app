@@ -46,7 +46,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: brianboti/fast-deploy
-          ref: 65b325a2c0150b21ac72297d2550219a65e8279b
+          ref: cd6ad5c42743a6573cb42c1821b9996ac220bbca
           persist-credentials: false
           path: platform
           token: ${{ secrets.PLATFORM_READ_TOKEN || github.token }}
@@ -68,6 +68,8 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}/platform
           GH_TOKEN: ${{ github.token }}
           BILLING_EXPORT_TABLE: ${{ vars.BILLING_EXPORT_TABLE }}
+          # Written by add_production: the application's production, whose spend the same export holds (docs/ROADMAP.md 16.7).
+          PRODUCTION_PROJECT_ID: ${{ vars.PRODUCTION_PROJECT_ID }}
           ONBOARDING_SUMMARY: ${{ vars.ONBOARDING_SUMMARY }}
         run: python -m labdeploy.cost
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
