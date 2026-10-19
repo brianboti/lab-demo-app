@@ -52,7 +52,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: brianboti/fast-deploy
-          ref: 65b325a2c0150b21ac72297d2550219a65e8279b
+          ref: cd6ad5c42743a6573cb42c1821b9996ac220bbca
           persist-credentials: false
           path: platform
           token: ${{ secrets.PLATFORM_READ_TOKEN || github.token }}
