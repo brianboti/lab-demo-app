@@ -21,7 +21,9 @@ needs:
   buckets: [uploads]
   topics: [events]
   database: none              # the demo stores nothing; firestore and postgres were exercised on 2026-10-12
-exposure: authenticated
+# People open the pages after a Google sign-in (Identity-Aware Proxy); only the accounts the controller lists for this app
+# get through. Was authenticated (programs with identity tokens only) until the live demo needed a link for a browser.
+exposure: lab-members
 state: stateless
 dependencies: []
 gpu: false
