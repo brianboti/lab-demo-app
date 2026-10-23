@@ -9,7 +9,7 @@ from fastapi.responses import HTMLResponse
 
 # The sentence the page shows in large letters. Change it, merge, release: the page shows the new one as soon as the new
 # version serves visitors. The tests read it from here, so any wording passes them.
-MESSAGE = "Lab deployment is running"
+MESSAGE = "Hello from LIVE demo <3 "
 VERSION = "0.2.0"
 
 app = FastAPI()
